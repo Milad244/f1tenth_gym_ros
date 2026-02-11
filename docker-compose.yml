@@ -25,10 +25,13 @@ services:
   sim:
     image: f1tenth_gym_ros
     build: ./
+    platform: linux/amd64
     volumes: 
       - .:/sim_ws/src/f1tenth_gym_ros
     environment:
       - DISPLAY=novnc:0.0
+    ports:
+      - "8765:8765"
     networks:
       - x11
     stdin_open: true

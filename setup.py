@@ -15,7 +15,9 @@ setup(
         (os.path.join('share', package_name, 'launch'), glob('launch/*.py')),
         (os.path.join('share', package_name, 'launch'), glob('launch/*.xacro')),
         (os.path.join('share', package_name, 'launch'), glob('launch/*.rviz')),
+        (os.path.join('share', package_name, 'launch'), glob('launch/*.json')),
         (os.path.join('share', package_name, 'config'), glob('config/*.yaml')),
+        (os.path.join('share', package_name, 'maps'), glob('maps/*')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -26,7 +28,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'gym_bridge = f1tenth_gym_ros.gym_bridge:main'
+            'gym_bridge = f1tenth_gym_ros.gym_bridge:main',
+            'wasd_teleop = f1tenth_gym_ros.wasd_teleop:main'
         ],
     },
 )
