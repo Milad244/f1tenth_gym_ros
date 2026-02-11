@@ -3,7 +3,7 @@
 
 This repository provides a ROS 2 bridge that turns the F1TENTH Gym environment into a ROS 2 simulation.
 
-If you are new to ROS or Docker, start with the Windows + Docker Desktop + noVNC steps in Setup options.
+If you are new to ROS or Docker, start with the Docker Desktop + noVNC steps in Setup options.
 
 ## Table of contents
 
@@ -30,9 +30,7 @@ If you are new to ROS or Docker, start with the Windows + Docker Desktop + noVNC
 <details>
 <summary>Standard setup with Docker, noVNC, and Foxglove (recommended)</summary>
 
-This was tested on Windows but should work on Mac. Linux will be different, so make changes as needed.
-
-### Quick start (Windows + Docker + noVNC)
+### Quick start (Docker + noVNC)
 
 1) Install prerequisites: Docker Desktop, VS Code, Git.
 2) Clone and open the repo.
@@ -50,38 +48,17 @@ This was tested on Windows but should work on Mac. Linux will be different, so m
 ### 2) Clone the repo
 
 ```powershell
-mkdir d:\RacerBot
-cd d:\RacerBot
-
-git clone -b main https://github.com/Sighton-GH/SageMath-Webcode.git f1tenth_gym_ros
-code d:\RacerBot\f1tenth_gym_ros
+git clone https://github.com/sfu-racerbot/f1tenth_gym_ros
 ```
 
-### 3) Verify required folders exist
-
-Make sure this folder exists:
-
-```text
-d:\RacerBot\f1tenth_gym_ros\f1tenth_gym\f1tenth_gym
-```
-
-If it does not exist, stop and ask for help before continuing.
-
-### 4) Build and start containers
+### 3) Build and start containers
 
 ```powershell
-cd d:\RacerBot\f1tenth_gym_ros
-
-docker compose build
-docker compose up -d
+cd f1tenth_gym_ros
+docker compose up
 ```
 
-You should now have:
-
-- f1tenth_gym_ros-sim-1
-- f1tenth_gym_ros-novnc-1
-
-### 5) Open noVNC
+### 4) Open noVNC
 
 Open in your browser:
 
@@ -91,8 +68,9 @@ http://localhost:8080/vnc.html
 
 Click Connect.
 
-### 6) Launch the simulation
+### 5) Launch the simulation
 
+- In another terminal launch the simulation
 ```powershell
 docker exec -d f1tenth_gym_ros-sim-1 bash -lc "source /sim_ws/.venv/bin/activate; source /opt/ros/humble/setup.bash; source /sim_ws/install/local_setup.bash; ros2 launch f1tenth_gym_ros gym_bridge_launch.py 2>&1 | tee /tmp/gym_bridge.log"
 ```
@@ -112,7 +90,7 @@ docker exec f1tenth_gym_ros-sim-1 bash -lc "tail -n 50 /tmp/gym_bridge.log"
   - Select ROS 2
   - URL: ws://localhost:8765
 4) Import the config launch JSON file:
-  - d:\RacerBot\f1tenth_gym_ros\launch\gym_bridge_foxglove.json
+  - f1tenth_gym_ros\launch\gym_bridge_foxglove.json
 
 ### 8) Drive the car (WASD + arrows)
 
@@ -234,36 +212,10 @@ rocker --nvidia --x11 --volume .:/sim_ws/src/f1tenth_gym_ros -- f1tenth_gym_ros
 
 </details>
 
-<details>
-<summary>Original instructions from RoboRacer (OLD)</summary>
-
-Dependencies:
-
-- Docker
-- Docker Compose
-
-Install and run:
-
-```bash
-docker compose up
-```
-
-Shell into the sim container:
-
-```bash
-docker exec -it f1tenth_gym_ros-sim-1 /bin/bash
-```
-
-Open noVNC:
-
-- [noVNC](http://localhost:8080/vnc.html)
-
-</details>
-
 ## Launching the simulation
 
 ```bash
-source $HOME/sim_ws/.venv/bin/activate
+source /sim_ws/.venv/bin/activate
 source /opt/ros/humble/setup.bash
 source /sim_ws/install/local_setup.bash
 ros2 launch f1tenth_gym_ros gym_bridge_launch.py
@@ -271,14 +223,14 @@ ros2 launch f1tenth_gym_ros gym_bridge_launch.py
 
 After the bridge is running, connect Foxglove and import the config launch JSON file. It preloads the recommended panels, topics, and layout for the sim:
 
-- d:\RacerBot\f1tenth_gym_ros\launch\gym_bridge_foxglove.json
+- f1tenth_gym_ros\launch\gym_bridge_foxglove.json
 
 ## Ports and URLs
 
 - noVNC: http://localhost:8080/vnc.html
 - Foxglove WebSocket: ws://localhost:8765
 - Foxglove app: https://app.foxglove.dev
-- Layout file: d:\RacerBot\f1tenth_gym_ros\launch\gym_bridge_foxglove.json
+- Layout file: f1tenth_gym_ros\launch\gym_bridge_foxglove.json
 
 ## Simulation settings
 
